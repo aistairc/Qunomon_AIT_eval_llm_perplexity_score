@@ -1,0 +1,66 @@
+{
+  "name": "eval_llm_perplexity_score",
+  "description": "LLMモデルで問題領域の質問に対して回答し、その生成されたテキストの品質を評価します。LLM評価基準を用いて、回答テキストのPerplexityスコアを計算し、テキストの質を数値化します。",
+  "source_repository": "https://github.com/aistairc/Qunomon_AIT_eval_llm_perplexity_score",
+  "version": "1.0",
+  "quality": "https://ait-hub.pj.aist.go.jp/ait-hub/api/0.0.1/qualityDimensions/機械学習品質マネジメントガイドライン第三版/C-1機械学習モデルの正確性",
+  "keywords": [
+    "LLM",
+    "Perplexity"
+  ],
+  "references": [],
+  "licenses": [
+    "Apache License Version 2.0"
+  ],
+  "inventories": [
+    {
+      "name": "question_data",
+      "type": "dataset",
+      "description": "質問と回答のペアを含むデータセット \nJSON形式{inputs:array, ground_truth:array}\n例：{inputs: [MLflowとは？], ground_truth: [MLflowは、機械学習ライフサイクルを管理するオープンプラットフォーム]}",
+      "requirement": {
+        "format": [
+          "json"
+        ]
+      }
+    },
+    {
+      "name": "llm_model_dir",
+      "type": "model",
+      "description": "事前にトレーニング済みの大規模言語モデルと、そのモデルの設定ファイルを保存したディレクトリ\n 例:T5, GPT-3\n モデルファイルは、config.json, model.safetensors, generation_config.json, special_tokens_map.json, tokenizer_config.json, tokenizer.jsonを含む",
+      "requirement": {
+        "format": [
+          "ALL"
+        ]
+      }
+    }
+  ],
+  "parameters": [],
+  "report": {
+    "measures": [
+      {
+        "name": "Perplexity_Score",
+        "type": "float",
+        "description": "計算されたPerplexityスコア",
+        "structure": "single",
+        "min": "0"
+      }
+    ],
+    "resources": [
+      {
+        "name": "sample_data_csv",
+        "type": "table",
+        "description": "Perplexityスコアが最も低い10セットのデータサンプル"
+      }
+    ]
+  },
+  "downloads": [
+    {
+      "name": "Log",
+      "description": "AIT実行ログ"
+    },
+    {
+      "name": "eval_result",
+      "description": "実行結果を示すCSVファイル。以下の項目を含む\n inputs:モデルに入力されたデータ\n predictions:モデルが生成した予測結果\n ground_truth:期待される正解データ\n Perplexity:Perplexityスコア"
+    }
+  ]
+}
